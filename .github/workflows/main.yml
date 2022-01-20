@@ -36,44 +36,23 @@ jobs:
     - name: test
       run: |
           echo ${{ secrets.GTOKEN }}>t.txt
-          ls
-          ls -la t.txt
+          ls -la
 
-    - name: upload getproxy
+    - name: upload 1
       shell: bash
       continue-on-error: true
       run: |
-        echo "${{github.repository_owner}} will upload files"
-        #######################################################################################################
-        ####################################### upload files ################################################
-        #######################################################################################################
         wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
         chmod -R 777 *
-        _token="${{ secrets.GTOKEN }}"
-        if [ -z "$_token" ]; then
-            _token=$(echo ${GITHUB_TOKEN})
-        fi
-        echo "token:$_token"
+        java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.json" -native-file "proxy.list"  -token "${{ secrets.GTOKEN }}" -commit-messge  "GitHubAction"
 
-        java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.json" -native-file "proxy.list"  -token "${_token}" -commit-messge  "GitHubAction"
+    - name: upload 2
+      shell: bash
+      continue-on-error: true
+      run: |
+        chmod -R 777 *
+        java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.txt" -native-file "proxyinfo.txt"  -token "${{ secrets.GTOKEN }}" -commit-messge  "GitHubAction"
 
-        java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.txt" -native-file "proxyinfo.txt"  -token "${_token}" -commit-messge  "GitHubAction"
-
-
-    # - name: commit
-    #   run: |
-    #     rm -rf .git
-    #     git init
-    #     git add .
-    #     git commit -m "`env TZ=Asia/Shanghai date`"
-    #     git remote add origin git@github.com:fate0/proxylist.git
-
-    # - name: push
-    #   uses: ad-m/github-push-action@master
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     branch: master
-    #     force: true
 
 
 
