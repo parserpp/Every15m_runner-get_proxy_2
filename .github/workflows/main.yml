@@ -26,7 +26,7 @@ jobs:
         git config --global user.name "fate0"
         git config --global user.email "git@fatezero.org"
         #pip install git+https://github.com/parserpp/getproxy.git@dev
-        pip install https://github.com/parserpp/getproxy.git@dev
+        pip install git+https://github.com/parserpp/getproxy.git@dev
 
     - name: prepare getproxy
       run: |
