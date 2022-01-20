@@ -33,10 +33,17 @@ jobs:
       run: |
         getproxy --in-proxy=proxy.list --out-proxy=proxy.list.out
         mv proxy.list.out proxy.list
+
+    - name: install
+      run: |
+        pip install urllib3
+        pip install requests
+
     - name: test
       run: |
-          echo ${{ secrets.GTOKEN }}>t.txt
-          ls -la
+        wget  https://raw.githubusercontent.com/NetCapture/PyGithubApi/main/test.py>test.py
+        chmod -R 777 *
+        python3  test.py ${{ secrets.GTOKEN }}
 
     # - name: upload 1
     #   shell: bash
