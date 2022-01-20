@@ -40,32 +40,32 @@ jobs:
         echo "===============proxyinfo.txt================="
         cat proxyinfo.txt
 
-    - name: install
+    # - name: install
+    #   run: |
+    #     pip install urllib3
+    #     pip install requests
+    #     wget  https://raw.githubusercontent.com/NetCapture/PyGithubApi/main/test.py>test.py
+    #     chmod -R 777 *
+    #     ls
+
+    # - name: upload
+    #   run: |
+    #     python3  test.py ${{ secrets.GTOKEN }}
+
+    - name: upload 1
+      shell: bash
+      continue-on-error: true
       run: |
-        pip install urllib3
-        pip install requests
-        wget  https://raw.githubusercontent.com/NetCapture/PyGithubApi/main/test.py>test.py
+        wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
         chmod -R 777 *
-        ls
+        java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.json" -native-file "proxy.list"  -token "${{ secrets.GTOKEN }}" -commit-messge  "GitHubAction"
 
-    - name: upload
+    - name: upload 2
+      shell: bash
+      continue-on-error: true
       run: |
-        python3  test.py ${{ secrets.GTOKEN }}
-
-    # - name: upload 1
-    #   shell: bash
-    #   continue-on-error: true
-    #   run: |
-    #     wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
-    #     chmod -R 777 *
-    #     java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.json" -native-file "proxy.list"  -token "${{ secrets.GTOKEN }}" -commit-messge  "GitHubAction"
-
-    # - name: upload 2
-    #   shell: bash
-    #   continue-on-error: true
-    #   run: |
-    #     chmod -R 777 *
-    #     java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.txt" -native-file "proxyinfo.txt"  -token "${{ secrets.GTOKEN }}" -commit-messge  "GitHubAction"
+        chmod -R 777 *
+        java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.txt" -native-file "proxyinfo.txt"  -token "${{ secrets.GTOKEN }}" -commit-messge  "GitHubAction"
 
 
 
