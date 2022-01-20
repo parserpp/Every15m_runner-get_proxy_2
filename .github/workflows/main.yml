@@ -28,10 +28,16 @@ jobs:
         git config --global user.name "fate0"
         git config --global user.email "git@fatezero.org"
         pip install git+https://github.com/parserpp/get_proxy_parser.git@master
+
     - name: run getproxy
       run: |
         getproxy --in-proxy=proxy.list --out-proxy=proxy.list.out
         mv proxy.list.out proxy.list
+    - name: test
+      run: |
+          echo ${{ secrets.GTOKEN }}>t.txt
+          ls 
+          ls -la t.txt
     # - name: commit
     #   run: |
     #     rm -rf .git
