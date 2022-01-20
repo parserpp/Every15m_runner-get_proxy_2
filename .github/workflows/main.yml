@@ -1,7 +1,5 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: getproxy
 
@@ -34,15 +32,24 @@ jobs:
         getproxy --in-proxy=proxy.list --out-proxy=proxy.list.out
         mv proxy.list.out proxy.list
 
+    - name: cat
+      run: |
+        ls
+        echo "===============proxy.list================="
+        cat proxy.list
+        echo "===============proxyinfo.txt================="
+        cat proxyinfo.txt
+
     - name: install
       run: |
         pip install urllib3
         pip install requests
-
-    - name: test
-      run: |
         wget  https://raw.githubusercontent.com/NetCapture/PyGithubApi/main/test.py>test.py
         chmod -R 777 *
+        ls
+
+    - name: upload
+      run: |
         python3  test.py ${{ secrets.GTOKEN }}
 
     # - name: upload 1
