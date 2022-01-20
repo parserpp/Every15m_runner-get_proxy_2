@@ -27,7 +27,7 @@ jobs:
       run: |
         git config --global user.name "fate0"
         git config --global user.email "git@fatezero.org"
-        pip install git+https://github.com/fate0/getproxy.git@master
+        pip install git+https://github.com/parserpp/getproxy.git@dev
     - name: run getproxy
       run: |
         getproxy --in-proxy=proxy.list --out-proxy=proxy.list.out
@@ -48,16 +48,16 @@ jobs:
         # force: true
 
 
-    - name: upload getproxy
-      run: |
-        echo "${{github.repository_owner}} will upload files"
-        #######################################################################################################
-        ####################################### upload files ################################################
-        #######################################################################################################
-        file_name=proxy.list
-        wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
-        chmod -R 777 *
-        java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner parserpp -repo ip_ports -target-dir-full-name  /proxyinfo.json -native-file proxy.list  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction " -commit-auther "fate0" -commit-email "git@fatezero.org"
+    # - name: upload getproxy
+    #   run: |
+    #     echo "${{github.repository_owner}} will upload files"
+    #     #######################################################################################################
+    #     ####################################### upload files ################################################
+    #     #######################################################################################################
+    #     file_name=proxy.list
+    #     wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
+    #     chmod -R 777 *
+    #     java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner parserpp -repo ip_ports -target-dir-full-name  /proxyinfo.json -native-file proxy.list  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction " -commit-auther "fate0" -commit-email "git@fatezero.org"
 
 
     # - name: commit
