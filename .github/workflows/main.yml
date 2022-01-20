@@ -54,16 +54,24 @@ jobs:
         # force: true
 
 
-    # - name: upload getproxy
-    #   run: |
-    #     echo "${{github.repository_owner}} will upload files"
-    #     #######################################################################################################
-    #     ####################################### upload files ################################################
-    #     #######################################################################################################
-    #     file_name=proxy.list
-    #     wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
-    #     chmod -R 777 *
-    #     java -jar uploadGithubService-1.1-jar-with-dependencies.jar  -owner parserpp -repo ip_ports -target-dir-full-name  /proxyinfo.json -native-file proxy.list  -token ${{ secrets.GTOKEN }} -commit-messge  "GitHubAction " -commit-auther "fate0" -commit-email "git@fatezero.org"
+    - name: upload getproxy
+      shell: bash
+      continue-on-error: true
+      run: |
+        echo "${{github.repository_owner}} will upload files"
+        #######################################################################################################
+        ####################################### upload files ################################################
+        #######################################################################################################
+        file_name=proxy.list
+        wget  https://github.com/hhhaiai/uploadGithub/releases/download/v1.1/uploadGithubService-1.1-jar-with-dependencies.jar
+        chmod -R 777 *
+        _token="${{ secrets.GTOKEN }}"
+        if [ -z "$_token" ]; then
+            _token=$(echo ${GITHUB_TOKEN})
+        fi
+        echo "token:$_token"
+
+        java -jar uploadGithubService-1.1-jar-with-dependencies.jar -owner "parserpp"  -repo "ip_ports" -target-name "proxyinfo.json" -native-file "proxy.list"  -token "${_token}" -commit-messge  "GitHubAction"
 
 
     # - name: commit
