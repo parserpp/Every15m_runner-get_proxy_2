@@ -134,3 +134,4 @@ venv
 
 *.jar
 parser_proxy_2/
+ip_ports/
