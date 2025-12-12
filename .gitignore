@@ -133,3 +133,4 @@ venv
 .vscode/
 
 *.jar
+parser_proxy_2/

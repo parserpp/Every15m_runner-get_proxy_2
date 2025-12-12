@@ -13,19 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
-    - name: setup env & install getproxy
+        python-version: '3.11'
+    - name: Clone parser_proxy_2 repository
       run: |
         git config --global user.name "fate0"
         git config --global user.email "git@fatezero.org"
-        pip install git+https://github.com/parserpp/get_proxy_parser.git@master
+        git clone https://github.com/parserpp/parser_proxy_2.git getproxy_src
+        cd getproxy_src
+        pip install -e .
 
     - name: run getproxy
       run: |
         getproxy --in-proxy=proxy.list --out-proxy=proxy.list.out --token=${{ secrets.GTOKEN }}
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "fate0"
+        git config --global user.email "git@fatezero.org"
+        git add proxy.list.out
+        git commit -m "GitHubAction: update proxy list" || echo "No changes to commit"
+        git push
 
 
