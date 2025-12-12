@@ -30,9 +30,9 @@ jobs:
       run: |
         getproxy --in-proxy=proxy.list --out-proxy=proxy.list.out --token=${{ secrets.GTOKEN }}
 
-    - name: Merge and upload to ip_ports
+    - name: Validate and upload to ip_ports
       run: |
-        python3 merge_and_upload.py
+        python3 validate_and_upload.py
       env:
         GTOKEN: ${{ secrets.GTOKEN }}
 
