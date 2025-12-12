@@ -32,32 +32,8 @@ jobs:
 
     - name: Upload to ip_ports and cleanup
       run: |
-        python3 -c "
-        import sys
-        sys.path.insert(0, 'getproxy_src')
-        from getproxy.github_api import update_content, delete_file
-        import os
-
-        token = os.getenv('GTOKEN')
-        if not token:
-            print('Error: GTOKEN not found')
-            sys.exit(1)
-
-        # Upload proxy.list
-        if os.path.exists('proxy.list'):
-            print('Uploading proxy.list to ip_ports...')
-            with open('proxy.list', 'r') as f:
-                update_content('parserpp', 'ip_ports', '/proxy.list', _token=token, _content_not_base64=f.read())
-            os.remove('proxy.list')
-            print('✓ Deleted proxy.list')
-
-        # Upload proxy.list.out
-        if os.path.exists('proxy.list.out'):
-            print('Uploading proxy.list.out to ip_ports...')
-            with open('proxy.list.out', 'r') as f:
-                update_content('parserpp', 'ip_ports', '/proxy.list.out', _token=token, _content_not_base64=f.read())
-            os.remove('proxy.list.out')
-            print('✓ Deleted proxy.list.out')
-        "
+        python3 upload_and_cleanup.py
+      env:
+        GTOKEN: ${{ secrets.GTOKEN }}
 
 
