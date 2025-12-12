@@ -18,7 +18,7 @@ https://github.com/NetCapture/PyGithubApi
 _VERSION = "v1.0.0"
 _NAME = "sanbo"
 _EMAIL = "sanbo.xyz@gmail.com"
-_COMMIT_MSG = "commit by python api[{}].".format(_VERSION)
+_COMMIT_MSG = "commit by python api[{}]. proxy2. .".format(_VERSION)
 isDebug = False
 
 
